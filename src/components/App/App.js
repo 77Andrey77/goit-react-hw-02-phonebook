@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Form from '../Form/Form';
 import ContactList from '../ContactList/ContactList';
 import Filter from '../Filter/Filter';
+import Notification from '../Notification/Notification';
 
 const shortid = require('shortid');
 
@@ -18,23 +19,24 @@ class App extends Component {
     };
 
     addContact = ({ name, number }) => {
-        const contact = {
-            id: shortid.generate(),
-            name,
-            number,
-        };
+        const isNameContacts = this.state.contacts.find(
+            contact => contact.name.toLowerCase() === name.toLowerCase(),
+        );
 
-        if (
-            this.state.contacts.find(
-                contact => contact.name.toLowerCase() === name.toLowerCase(),
-            )
-        ) {
+        const isNumberContacts = this.state.contacts.find(
+            contact => contact.number === number,
+        );
+
+        if (isNameContacts) {
             alert(`${name} is already in contacts`);
-        } else if (
-            this.state.contacts.find(contact => contact.number === number)
-        ) {
+        } else if (isNumberContacts) {
             alert(`${number} is alread in contacts`);
         } else {
+            const contact = {
+                id: shortid.generate(),
+                name,
+                number,
+            };
             //распыляет в массив
             this.setState(({ contacts }) => ({
                 contacts: [contact, ...contacts],
@@ -65,16 +67,22 @@ class App extends Component {
     };
 
     render() {
+        const visibleContacts = this.visibleContacts();
+
         return (
             <div>
                 <h1>Phonebook</h1>
                 <Form onSubmit={this.addContact} />
 
                 <h2>Contacts</h2>
-                <Filter
-                    value={this.state.filter}
-                    onChange={this.onChangeFilter}
-                />
+                {visibleContacts.length > 0 ? (
+                    <Filter
+                        value={this.state.filter}
+                        onChange={this.onChangeFilter}
+                    />
+                ) : (
+                    <Notification message="You have no contacts !!" />
+                )}
                 <ContactList
                     contacts={this.visibleContacts()}
                     onDeleteContact={this.deleteContact}
