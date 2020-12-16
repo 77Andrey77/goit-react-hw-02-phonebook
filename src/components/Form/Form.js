@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../Form/Form.css';
 import shortid from 'shortid';
 
 class Form extends Component {
@@ -31,8 +32,12 @@ class Form extends Component {
         const { name, number } = this.state;
         return (
             <div>
-                <form id="contact" onSubmit={this.handleSubmit}>
-                    <label htmlFor={this.nameInputId}>
+                <form
+                    className="form"
+                    id="contact"
+                    onSubmit={this.handleSubmit}
+                >
+                    <label className="label" htmlFor={this.nameInputId}>
                         Name
                         <input
                             className="input-field"

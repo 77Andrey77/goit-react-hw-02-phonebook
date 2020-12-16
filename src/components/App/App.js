@@ -4,7 +4,7 @@ import Form from '../Form/Form';
 import ContactList from '../ContactList/ContactList';
 import Filter from '../Filter/Filter';
 import Notification from '../Notification/Notification';
-
+import '../App/App.css';
 const shortid = require('shortid');
 
 class App extends Component {
@@ -70,11 +70,11 @@ class App extends Component {
         const visibleContacts = this.visibleContacts();
 
         return (
-            <div>
-                <h1>Phonebook</h1>
+            <div className="container">
+                <h1 className="title">Phonebook</h1>
                 <Form onSubmit={this.addContact} />
 
-                <h2>Contacts</h2>
+                <h2 className="title">Contacts</h2>
                 {visibleContacts.length > 0 ? (
                     <Filter
                         value={this.state.filter}
