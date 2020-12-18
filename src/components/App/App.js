@@ -19,11 +19,11 @@ class App extends Component {
     };
 
     addContact = ({ name, number }) => {
-        const isNameContacts = this.state.contacts.find(
+        const isNameContacts = this.state.contacts.some(
             contact => contact.name.toLowerCase() === name.toLowerCase(),
         );
 
-        const isNumberContacts = this.state.contacts.find(
+        const isNumberContacts = this.state.contacts.some(
             contact => contact.number === number,
         );
 
